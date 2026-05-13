@@ -23,7 +23,7 @@ from zoneinfo import ZoneInfo
 
 tz_vn = ZoneInfo("Asia/Ho_Chi_Minh") 
 
-templates = Jinja2Templates(directory="templates"),
+templates = Jinja2Templates(directory="templates")
 
 # Khởi tạo ứng dụng FastAPI
 app = FastAPI(
