@@ -15,7 +15,7 @@ security = HTTPBearer()
 # Hàm tạo thẻ Token khi người dùng đăng nhập
 def create_access_token(data: dict):
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(days=30) # Token có hạn 30 ngày cho tiện
+    expire = datetime.utcnow() + timedelta(days=30) # Token có hạn 30 ngày 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -24,7 +24,6 @@ def create_access_token(data: dict):
 def verify_token(credentials: HTTPAuthorizationCredentials = Security(security)):
     try:
         token = credentials.credentials
-        # Đã thêm đúng tham số vào đây
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
     except jwt.ExpiredSignatureError:

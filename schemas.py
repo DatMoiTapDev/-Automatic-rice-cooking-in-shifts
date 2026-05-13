@@ -9,7 +9,7 @@ class RoleType(str, Enum):
     leader = "leader"
     member = "member"
 
-# Cập nhật thêm ca Sáng vào hệ thống
+# Các phiên nấu ăn trong tuần
 class MealType(str, Enum):
     sang = "Sáng"
     trua = "Trưa"
