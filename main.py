@@ -3,6 +3,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 from sqlalchemy.future import select
 
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+
+
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import get_db 
@@ -17,6 +22,8 @@ from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 tz_vn = ZoneInfo("Asia/Ho_Chi_Minh") 
+
+templates = Jinja2Templates(directory="templates"),
 
 # Khởi tạo ứng dụng FastAPI
 app = FastAPI(
@@ -34,9 +41,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def read_root():
-    return {"message": "Server FastAPI đã chạy thành công!"}
+@app.get("/", response_class=HTMLResponse)
+async def serve_frontend(request: Request):
+    return templates.TemplateResponse(request=request, name="index.html")
 
 @app.get("/test-db")
 async def test_database_connection(db: AsyncSession = Depends(get_db)):
