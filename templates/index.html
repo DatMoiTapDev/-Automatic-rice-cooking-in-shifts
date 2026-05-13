@@ -157,7 +157,7 @@
 
     async function generateShifts() {
         // Đã thêm  vào cuối để trích xuất đúng chuỗi ngày YYYY-MM-DD
-        const today = new Date().toISOString().split('T'); 
+        const today = new Date().toISOString().split('T');
         
         const res = await apiCall("/shifts/generate", "POST", { start_date: today, days: 7 });
         if (res.ok) {
