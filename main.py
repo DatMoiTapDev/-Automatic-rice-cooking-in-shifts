@@ -6,8 +6,6 @@ from sqlalchemy.future import select
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from fastapi.responses import HTMLResponse
-
-
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import get_db 

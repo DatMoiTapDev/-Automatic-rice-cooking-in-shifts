@@ -156,15 +156,17 @@
     }
 
     async function generateShifts() {
-        // Đã thêm  vào cuối để trích xuất đúng chuỗi ngày YYYY-MM-DD
-        const today = new Date().toISOString().split('T');
+        // Bổ sung  để lấy chính xác chuỗi YYYY-MM-DD
+        const today = new Date().toISOString().split('T'); 
         
         const res = await apiCall("/shifts/generate", "POST", { start_date: today, days: 7 });
         if (res.ok) {
             alert("Đã tạo lịch cho 7 ngày tới thành công!");
             loadSchedule();
         } else {
-            alert("Có lỗi xảy ra từ máy chủ, không thể tạo lịch!"); 
+            // Ép hệ thống in ra chi tiết lỗi nếu có để dễ dàng bắt bệnh
+            const errorData = await res.json();
+            alert("Chi tiết lỗi từ máy chủ:\n" + JSON.stringify(errorData, null, 2));
         }
     }
 
