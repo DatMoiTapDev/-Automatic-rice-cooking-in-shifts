@@ -155,9 +155,7 @@
         }
     }
 
-    async function generateShifts() {
-        // Bổ sung  để lấy chính xác chuỗi YYYY-MM-DD
-        const today = new Date().toISOString().split('T'); 
+    async function generateShifts() {        const today = new Date().toISOString().substring(0, 10);
         
         const res = await apiCall("/shifts/generate", "POST", { start_date: today, days: 7 });
         if (res.ok) {
