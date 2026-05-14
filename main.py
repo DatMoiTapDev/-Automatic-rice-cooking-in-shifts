@@ -93,7 +93,7 @@ async def upload_schedule(
     db: AsyncSession = Depends(get_db)
 ):
     content = await file.read() 
-    schedules_to_add = ""
+    schedules_to_add = list()
     
     try:
         filename = file.filename.lower()
@@ -137,7 +137,7 @@ async def generate_shifts(
     leader_data: dict = Depends(require_leader)
 ):
     start_date = datetime.strptime(req.start_date, "%Y-%m-%d").date()
-    shifts_to_add = ""
+    shifts_to_add = list()
     
     for i in range(req.days):
         current_date = start_date + timedelta(days=i)
@@ -186,7 +186,7 @@ async def view_schedule(
     result = await db.execute(query)
     rows = result.all()
     
-    schedule = ""
+    schedule = list()
     for shift, assignment, user in rows:
         start_local = shift.required_start_time.astimezone(tz_vn)
         end_local = shift.required_end_time.astimezone(tz_vn)
@@ -222,7 +222,7 @@ async def get_cooking_suggestions(
     users_result = await db.execute(users_query)
     all_users = users_result.scalars().all()
 
-    available_users = ""
+    available_users = list()
     
     for user in all_users:
         if shift.meal_type == "Sáng":
@@ -242,7 +242,7 @@ async def get_cooking_suggestions(
         if not is_busy:
             available_users.append(user)
 
-    suggestions = ""
+    suggestions = list()
     for user in available_users:
         quota_query = select(models.Quota).where(models.Quota.user_id == user.user_id)
         quota_result = await db.execute(quota_query)
